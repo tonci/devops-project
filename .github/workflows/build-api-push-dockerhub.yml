@@ -54,7 +54,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:api"
           file: "{{defaultContext}}:api/Dockerfile"
           push: true
           tags: tonci123/devops-java-api:latest
