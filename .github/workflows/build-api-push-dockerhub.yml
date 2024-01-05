@@ -6,13 +6,14 @@ on:
 
 jobs:
   build:
-    runs-on: openjdk:21-ea-34-slim
+    runs-on: openjdk-21-ea-34-slim
     steps:
       - run: cd api
       - run: mvn clean install
 
   docker:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
