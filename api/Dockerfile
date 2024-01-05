@@ -1,4 +1,4 @@
-FROM openjdk:21-ea-34-slim
+FROM openjdk:23-ea-3-slim
 
 RUN useradd -m appuser
 WORKDIR /app
