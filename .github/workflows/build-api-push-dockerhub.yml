@@ -34,12 +34,6 @@ jobs:
           name: api-jar
           path: api/target
 
-      - name: List contents of the api directory
-        run: ls -l api
-
-      - name: List contents of the target directory
-        run: ls -l api/target
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
