@@ -1,0 +1,34 @@
+name: Build API and push to Docker Hub
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: openjdk:21-ea-34-slim
+    steps:
+      - run: cd api
+      - run: mvn clean install
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: "{{defaultContext}}:api"
+          push: true
+          tags: tonci123/devops-java-api:latest
