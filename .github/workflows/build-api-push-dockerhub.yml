@@ -3,6 +3,7 @@ name: Build API and push to Docker Hub
 on:
   push:
     branches: ['main']
+    paths: ['api/**']
 
 jobs:
   build:
