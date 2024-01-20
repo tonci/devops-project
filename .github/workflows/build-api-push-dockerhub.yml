@@ -15,6 +15,17 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
           cache: 'maven'
+      - name: Unit tests
+        run: |
+          cd api
+          mvn test
+      - name: Set Build Version
+        id: jar_version
+        run: echo "JAR_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> "$GITHUB_OUTPUT"
+      - name: Get Build Version
+        env:
+          JAR_VERSION: ${{ steps.jar_version.outputs.JAR_VERSION }}
+        run: echo "Jar version - $JAR_VERSION"
       - name: Build with Maven
         run: |
           cd api
@@ -22,7 +33,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: api-jar
-          path: api/target/api-0.0.2-SNAPSHOT.jar
+          path: api/target/api-$JAR_VERSION.jar
 
   docker:
     runs-on: ubuntu-latest
@@ -33,7 +44,10 @@ jobs:
         with:
           name: api-jar
           path: api/target
-
+      - name: Get Build Version
+        env:
+          JAR_VERSION: ${{ jobs.build.steps.jar_version.outputs.JAR_VERSION }}
+        run: echo "Jar version - $JAR_VERSION"
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -52,4 +66,4 @@ jobs:
           context: api
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: tonci123/devops-java-api:v0.0.2
+          tags: tonci123/devops-java-api:$JAR_VERSION
