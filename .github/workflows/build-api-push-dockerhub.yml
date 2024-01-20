@@ -46,7 +46,7 @@ jobs:
           path: api/target
       - name: Get Build Version
         env:
-          JAR_VERSION: ${{ jobs.build.steps.jar_version.outputs.JAR_VERSION }}
+          JAR_VERSION: ${{ steps.jar_version.outputs.JAR_VERSION }}
         run: echo "Jar version - $JAR_VERSION"
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
