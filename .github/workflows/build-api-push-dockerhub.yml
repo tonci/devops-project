@@ -22,7 +22,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: api-jar
-          path: api/target/api-0.0.1-SNAPSHOT.jar
+          path: api/target/api-0.0.2-SNAPSHOT.jar
 
   docker:
     runs-on: ubuntu-latest
@@ -52,4 +52,4 @@ jobs:
           context: api
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: tonci123/devops-java-api:latest
+          tags: tonci123/devops-java-api:v0.0.2
