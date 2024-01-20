@@ -7,7 +7,7 @@ RUN chown -R appuser:appuser /app
 
 USER appuser
 
-COPY target/api-0.0.1-SNAPSHOT.jar app.jar
+COPY target/api-0.0.2-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
