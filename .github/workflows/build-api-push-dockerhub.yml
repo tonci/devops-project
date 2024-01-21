@@ -86,4 +86,4 @@ jobs:
       - uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          token: ${{ secrets.WORKFLOW_PAT }}
+          github_token: ${{ secrets.WORKFLOW_PAT }}
