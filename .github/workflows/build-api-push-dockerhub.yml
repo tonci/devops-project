@@ -71,4 +71,6 @@ jobs:
           context: api
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: tonci123/devops-java-api:v${{ needs.build.outputs.jar_version }}
+          tags: |
+            tonci123/devops-java-api:v${{ needs.build.outputs.jar_version }}
+            tonci123/devops-java-api:latest
