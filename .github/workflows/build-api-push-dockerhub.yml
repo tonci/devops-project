@@ -21,7 +21,9 @@ jobs:
           mvn test
       - name: Set Build Version
         id: jar_version
-        run: echo "JAR_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> "$GITHUB_OUTPUT"
+        run: |
+          cd api
+          echo "JAR_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> "$GITHUB_OUTPUT"
       - name: Get Build Version
         env:
           JAR_VERSION: ${{ steps.jar_version.outputs.JAR_VERSION }}
