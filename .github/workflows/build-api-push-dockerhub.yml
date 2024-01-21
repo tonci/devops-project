@@ -74,3 +74,15 @@ jobs:
           tags: |
             tonci123/devops-java-api:v${{ needs.build.outputs.jar_version }}
             tonci123/devops-java-api:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: docker
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update deployment image tag
+        run: |
+          sed -i "s|image: tonci123/devops-java-api:.*|image: tonci123/devops-java-api:v${{ needs.build.outputs.jar_version }}|" k8s/manifests/deployment.yaml
+      - uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
