@@ -35,7 +35,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: api-jar
-          path: api/target/api-$JAR_VERSION.jar
+          path: "api/target/api-$JAR_VERSION.jar"
 
   docker:
     runs-on: ubuntu-latest
