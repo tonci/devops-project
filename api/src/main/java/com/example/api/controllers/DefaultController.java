@@ -10,6 +10,6 @@ public class DefaultController {
 
     @GetMapping
     public String index() {
-        return "Hello From The App! Updated!";
+        return "Hello From The App! Returned!";
     }
 }
