@@ -82,6 +82,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.WORKFLOW_PAT }}
+      - name: Fetch latest changes from the repository
+        run: git pull --rebase origin main
       - name: Update deployment image tag
         run: |
           sed -i "s|image: tonci123/devops-java-api:.*|image: tonci123/devops-java-api:v${{ needs.build.outputs.jar_version }}|" k8s/manifests/deployment.yaml
