@@ -34,10 +34,12 @@ jobs:
         run: |
           cd api
           mvn clean install
+#         Rename the jar file to api.jar so that it can be easily used at the Dockerfile
+          mv target/api-${{ steps.jar_version.outputs.jar_version }}.jar target/app.jar
       - uses: actions/upload-artifact@v4
         with:
           name: api-jar
-          path: api/target/api-${{ steps.jar_version.outputs.jar_version }}.jar
+          path: api/target/app.jar
 
   docker:
     runs-on: ubuntu-latest
@@ -70,4 +72,4 @@ jobs:
           context: api
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: tonci123/devops-java-api:${{ needs.build.outputs.jar_version }}
+          tags: tonci123/devops-java-api:v${{ needs.build.outputs.jar_version }}
