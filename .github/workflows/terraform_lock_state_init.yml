@@ -10,6 +10,9 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.7.1"
+      - name: Cd to terraform folder
+        id: cd
+        run: cd infra/terraform/lock_state_init
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
