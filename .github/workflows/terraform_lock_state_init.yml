@@ -1,4 +1,4 @@
-name: Build API and push to Docker Hub
+name: Initialize Terraform Lock and State
 
 on: workflow_dispatch
 
