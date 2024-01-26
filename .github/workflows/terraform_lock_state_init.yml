@@ -10,23 +10,25 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.7.1"
-      - name: Cd to terraform folder
-        id: cd
-        run: cd infra/terraform/lock_state_init
       - name: Terraform fmt
         id: fmt
+        working-directory: ./infra/terraform/lock_state_init
         run: terraform fmt -check
         continue-on-error: true
       - name: Terraform init
         id: init
+        working-directory: ./infra/terraform/lock_state_init
         run: terraform init
       - name: Terraform validate
         id: validate
+        working-directory: ./infra/terraform/lock_state_init
         run: terraform validate -no-color
       - name: Terraform Plan
         id: plan
+        working-directory: ./infra/terraform/lock_state_init
         run: terraform plan -no-color
         continue-on-error: true
       - name: Terraform apply
         id: apply
+        working-directory: ./infra/terraform/lock_state_init
         run: terraform apply -auto-approve
