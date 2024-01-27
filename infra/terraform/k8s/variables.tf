@@ -5,7 +5,7 @@ variable "region" {
 }
 
 variable "cluster_version" {
-  description  = "AWS EKS cluster version"
-  type         = string
-  default      = "1.28"
+  description = "AWS EKS cluster version"
+  type        = string
+  default     = "1.28"
 }
