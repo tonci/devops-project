@@ -1,8 +1,7 @@
 name: Terraform AWS EKS PR Checks
 
 on:
-  pull_request:
-    branches: ['main']
+  push:
     paths: ['infra/terraform/k8s/**']
 
 jobs:
