@@ -6,7 +6,7 @@ terraform {
     }
   }
 
-  required_version = ">= 1.6.0"
+  required_version = ">= 1.7.0"
 }
 
 provider "aws" {
@@ -32,9 +32,9 @@ resource "aws_dynamodb_table" "dynamodb_tf_state" {
   billing_mode   = "PROVISIONED"
   read_capacity  = 5
   write_capacity = 5
-  hash_key       = "LockId"
+  hash_key       = "LockID"
   attribute {
-    name = "LockId"
+    name = "LockID"
     type = "S"
   }
   tags = {
