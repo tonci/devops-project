@@ -6,7 +6,7 @@ on:
     paths: ['infra/terraform/k8s/**']
 
 jobs:
-  terraform-lock-state-init:
+  terraform-k8s-apply:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

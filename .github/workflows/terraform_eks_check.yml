@@ -1,12 +1,11 @@
-name: Terraform AWS EKS PR Checks
+name: Terraform AWS EKS Checks
 
 on:
-  pull_request:
-    branches: ['main']
+  push:
     paths: ['infra/terraform/k8s/**']
 
 jobs:
-  terraform-lock-state-init:
+  terraform-k8s-checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
