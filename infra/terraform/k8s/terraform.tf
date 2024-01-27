@@ -22,10 +22,10 @@ terraform {
   }
 
   backend "s3" {
-    bucket                  = "tonci-course-tf-state"
-    dynamodb_table          = "tf_locks"
-    key                     = "my-terraform-project"
-    region                  = "eu-west-1"
+    bucket         = "tonci-course-tf-state"
+    dynamodb_table = "tf_locks"
+    key            = "my-terraform-project"
+    region         = "eu-west-1"
   }
 
   required_version = ">= 1.7.0"
