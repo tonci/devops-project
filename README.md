@@ -28,6 +28,7 @@ kubectl get svc -n argocd
 kubectl delete secret argocd-initial-admin-secret -n argocd
 ```
 4. Login to ArgoCD and add new application pointing to this repository at ```k8s``` directory
+5. Run ```kubectl get svc``` to get the app LoadBalancer service external address.
 
 ## Dependabot
 - Enabled security updates
