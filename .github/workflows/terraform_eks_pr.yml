@@ -1,6 +1,9 @@
-name: Terraform AWS EKS
+name: Terraform AWS EKS PR Checks
 
-on: workflow_dispatch
+on:
+  pull_request:
+    branches: ['main']
+    paths: ['infra/terraform/k8s/**']
 
 jobs:
   terraform-lock-state-init:
@@ -20,7 +23,6 @@ jobs:
         id: fmt
         working-directory: ./infra/terraform/k8s
         run: terraform fmt -check
-        continue-on-error: true
       - name: Terraform init
         id: init
         working-directory: ./infra/terraform/k8s
@@ -33,7 +35,3 @@ jobs:
         id: plan
         working-directory: ./infra/terraform/k8s
         run: terraform plan
-      - name: Terraform apply
-        id: apply
-        working-directory: ./infra/terraform/k8s
-        run: terraform apply -auto-approve
