@@ -104,3 +104,27 @@ kubectl delete secret argocd-initial-admin-secret -n argocd
 
 - Run terraform ```fmt```, ```validate```, ```plan``` and ```apply``` to validate the Terraform configuration on changes.
 - On push to ```main``` branch when changes to the infra/terraform/k8s directory are pushed.
+
+### Running code tests on push
+
+```Build API and test```
+
+- Code Quality
+  - Run Markdown lint
+  - Check with GitLeaks for secrets
+  - Check with Snyk for vulnerabilities
+- Build
+  - Run Unit tests
+  - Build Java application
+  - Run SonarCloud scan
+- Docker tests
+  - Build Docker image
+  - Scan with Trivy for vulnerabilities
+
+### Demo Self-hosted Runner
+
+```Self hosted runner demo```
+
+- Run a simple workflow on a self-hosted runner (Aws EC2 instance)
+
+![Self-hosted runner example](docs/images/selfhosted_runner.png "Self-hosted runner example")
