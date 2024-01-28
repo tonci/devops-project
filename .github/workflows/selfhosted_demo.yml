@@ -19,19 +19,19 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build
     steps:
       - run: echo "🎉 Test."
 
   unit-test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build
     steps:
       - run: echo "🎉 Unit Test."
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [test, unit-test]
     steps:
       - run: echo "🎉 Deploy."
