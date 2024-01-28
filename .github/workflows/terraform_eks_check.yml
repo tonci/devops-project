@@ -3,6 +3,7 @@ name: Terraform AWS EKS Checks
 on:
   push:
     paths: ['infra/terraform/k8s/**']
+  workflow_dispatch:
 
 jobs:
   terraform-k8s-checks:
