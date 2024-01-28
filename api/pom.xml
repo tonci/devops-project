@@ -15,6 +15,7 @@
     <description>api</description>
     <properties>
         <java.version>21</java.version>
+        <sonar.java.binaries>${project.build.directory}/classes</sonar.java.binaries>
     </properties>
     <dependencies>
         <dependency>
