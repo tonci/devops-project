@@ -1,0 +1,96 @@
+name: Build API and test
+
+on: push
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Markdown Lint
+        uses: actionshub/markdownlint@main
+
+      - name: Check with GitLeaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --all-projects --severity-threshold=high
+
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      jar_version: ${{ steps.jar_version.outputs.jar_version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+      - name: Unit tests
+        run: |
+          cd api
+          mvn test
+      - name: Set Build Version
+        id: jar_version
+        run: |
+          cd api
+          echo "jar_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> "$GITHUB_OUTPUT"
+      - name: Build with Maven
+        run: |
+          cd api
+          mvn clean package
+          mv target/api-${{ steps.jar_version.outputs.jar_version }}.jar target/app.jar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: api-jar
+          path: api/target/app.jar
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: api-jar
+          path: api/target
+      - name: Get Build Version
+        env:
+          JAR_VERSION: ${{ needs.build.outputs.jar_version }}
+        run: echo "Jar version - $JAR_VERSION"
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: api
+          platforms: linux/amd64,linux/arm64
+          push: false
+          tags: tonci123/devops-java-api:v${{ needs.build.outputs.jar_version }}
+          load: true
+
+      - name: Scan the image with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'tonci123/devops-java-api:v${{ needs.build.outputs.jar_version }}'
+          format: 'table'
+          exit-code: '1'  # Fail step if vulnerabilities are found
+          ignore-unfixed: true
+          severity: 'CRITICAL'
