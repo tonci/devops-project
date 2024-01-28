@@ -1,7 +1,10 @@
 # DevOps final project
 
-The project so far consist of a simple java (Spring Boot application).
-It serves as an API server.
+This is a project for the DevOps course that builds a CI/CD pipeline for a Java application.
+
+It uses GitHub Actions, AWS, Slack, Terraform, Kubernetes and ArgoCD.
+
+The purpose of the project is to demonstrate the use of DevOps tools and practices.
 
 The code for the API server is located in the `api` folder.
 It contains a `Dockerfile` that builds the image
