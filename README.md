@@ -5,6 +5,12 @@ The project so far consist of a simple java (Spring Boot application) that serve
 The code for the API server is located in the `api` folder. It contains a `Dockerfile` that builds the image for the API server based on `openjdk:21-ea-34-slim` image.
 
 ## How to run the project
+### Prerequisites
+- [Terraform](https://developer.hashicorp.com/terraform/install?product_intent=terraform)
+- [aws cli installed and configured](https://aws.amazon.com/cli/)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/)
+- [ArgoCD](https://argoproj.github.io/argo-cd/getting_started/) - install the cli
+
 1. Manually start ```Initialize Terraform Lock and State``` workflow
 2. Manually start ```Terraform AWS EKS Push Apply``` workflow
 3. Install ArgoCD on the Kubernetes cluster
