@@ -4,7 +4,8 @@ The project so far consist of a simple java (Spring Boot application).
 It serves as an API server.
 
 The code for the API server is located in the `api` folder.
-It contains a `Dockerfile` that builds the image for the API server based on `openjdk:21-ea-34-slim` image.
+It contains a `Dockerfile` that builds the image
+for the API server based on `openjdk:21-ea-34-slim` image.
 
 ## How to run the project
 
@@ -21,23 +22,23 @@ It contains a `Dockerfile` that builds the image for the API server based on `op
 - Manually start ```Terraform AWS EKS Push Apply``` workflow
 - Install ArgoCD on the Kubernetes cluster 
 ```shell
-# From the infra/terraform/k8s directory run
-aws eks --region $(terraform output -raw region) update-kubeconfig \
+  # From the infra/terraform/k8s directory run
+  aws eks --region $(terraform output -raw region) update-kubeconfig \
     --name $(terraform output -raw cluster_name)
-# this will configure kubectl to use the EKS cluster
-
-# Create argocd namespace
-kubectl create namespace argocd
-# Install ArgoCD
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-# Expose ArgoCD server as LoadBalancer service
-kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
-# Get ArgoCD initial server password
-argocd admin initial-password -n argocd
-# Get the ArgoCD server LoadBalancer service external address, login and change the password
-kubectl get svc -n argocd
-# Delete the ArgoCD initial admin secret
-kubectl delete secret argocd-initial-admin-secret -n argocd
+  # this will configure kubectl to use the EKS cluster
+  
+  # Create argocd namespace
+  kubectl create namespace argocd
+  # Install ArgoCD
+  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  # Expose ArgoCD server as LoadBalancer service
+  kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+  # Get ArgoCD initial server password
+  argocd admin initial-password -n argocd
+  # Get the ArgoCD server LoadBalancer service external address, login and change the password
+  kubectl get svc -n argocd
+  # Delete the ArgoCD initial admin secret
+  kubectl delete secret argocd-initial-admin-secret -n argocd
 ```
 - Login to ArgoCD and add new application pointing to this repository at ```k8s``` directory
 - Run ```kubectl get svc``` to get the app LoadBalancer service external address.
