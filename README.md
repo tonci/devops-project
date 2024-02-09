@@ -45,6 +45,11 @@ kubectl get svc -n argocd
 kubectl delete secret argocd-initial-admin-secret -n argocd
 ```
 
+```shell
+# To uninstall ArgoCD run
+kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+
 - Login to ArgoCD and add new application pointing to this repository at ```k8s``` directory
 - Run ```kubectl get svc``` to get the app LoadBalancer service external address.
 
